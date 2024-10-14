@@ -10,7 +10,7 @@ const Header = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto d-flex gap-4">
-                        <NavLink to='/' className='text-light text-decoration-none' activeClassName="active">Home</NavLink>
+                        <NavLink to='/' className='text-light text-decoration-none' activeclassname="active">Home</NavLink>
                         {/* <NavLink to='/course-details' className='text-light text-decoration-none'>Courses</NavLink> */}
                         <NavLink to='/playlist' className='text-light text-decoration-none'>Playlist</NavLink>
                     </Nav>
