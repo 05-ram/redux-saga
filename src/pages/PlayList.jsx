@@ -1,16 +1,41 @@
-import React from 'react'
-import { Button, Card } from 'react-bootstrap';
+import React, { useEffect } from 'react'
+import { Button, Card, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setSelectedPlaylist } from '../features/playlist/selectedPlay';
+import { fetchPlaylists } from '../features/playlist/playlistSlice';
 
 const PlayList = () => {
     const navigate = useNavigate();
-    const playlists = useSelector(state => state.playlist);
+    // const playlists = useSelector(state => state.playlist);
     const dispatch = useDispatch();
+
+    const playlists = useSelector(state => state.playlist?.data);
+    const isLoading = useSelector(state => state.playlist.isLoading);
+    const error = useSelector(state => state.playlist.error);
+
+    useEffect(() => {
+        dispatch(fetchPlaylists())
+    }, [])
+
     const handlePlaylist = (playlist) => {
         dispatch(setSelectedPlaylist(playlist))
         navigate('/play-details')
+    }
+
+    if (isLoading) {
+        return (
+            <div className="d-flex justify-content-center wrapper-container align-items-center">
+                <Spinner variant="success" animation='border' />
+            </div>
+        )
+    }
+    if (error) {
+        return (
+            <div className="d-flex justify-content-center">
+                {error}
+            </div>
+        )
     }
     return (
         <div className='wrapper-container d-flex flex-column gap-4 align-items-center mt-2 '>
