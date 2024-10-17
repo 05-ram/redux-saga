@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setSelectedPlaylist } from '../features/playlist/selectedPlay';
 import { fetchPlaylists } from '../features/playlist/playlistSlice';
+import { FETCH_PLAYLIST_REQUEST } from '../redux/actions/playlistActions';
 
 const PlayList = () => {
     const navigate = useNavigate();
@@ -14,8 +15,9 @@ const PlayList = () => {
     const isLoading = useSelector(state => state.playlist.isLoading);
     const error = useSelector(state => state.playlist.error);
 
+
     useEffect(() => {
-        dispatch(fetchPlaylists())
+        dispatch(FETCH_PLAYLIST_REQUEST())
     }, [])
 
     const handlePlaylist = (playlist) => {
@@ -42,18 +44,22 @@ const PlayList = () => {
             <h3>Playlist Page</h3>
             <div className='card-deck d-grid gap-4 p-4 w-100'>
                 {
-                    playlists.map(playlist => (
-                        < Card key={playlist.id}>
-                            <Card.Img variant="top" src={playlist.url} height={150} />
-                            <Card.Body>
-                                <Card.Title>{playlist.title}</Card.Title>
-                                <Card.Text>
-                                    {playlist.description}
-                                </Card.Text>
-                                <Button variant="primary" onClick={() => handlePlaylist(playlist)}>View Playlist</Button>
-                            </Card.Body>
-                        </Card>
-                    ))
+
+                    playlists.coursesCollections?.length > 0 ?
+                        (playlists.coursesCollections.map(playlist => (
+                            < Card key={playlist.id}>
+                                <Card.Img variant="top" src={playlist.url} height={150} />
+                                <Card.Body>
+                                    <Card.Title>{playlist.title}</Card.Title>
+                                    <Card.Text>
+                                        {playlist.description}
+                                    </Card.Text>
+                                    <Button variant="primary" onClick={() => handlePlaylist(playlist)}>View Playlist</Button>
+                                </Card.Body>
+                            </Card>
+                        )))
+                        :
+                        (<div>No Playlists Available...</div>)
                 }
             </div>
         </div>

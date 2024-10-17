@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setSelectedCourse } from '../features/course/selectedSlice';
 import { fetchCourses } from '../features/course/courseSlice';
+import { FETCH_COURSES_REQUEST } from '../redux/actions/courseActions';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -15,10 +16,8 @@ const Home = () => {
     const isLoading = useSelector(state => state.course.isLoading);
     const error = useSelector(state => state.course.error);
 
-    console.log('--------Home------', courses)
-
     useEffect(() => {
-        dispatch(fetchCourses());
+        dispatch(FETCH_COURSES_REQUEST());
     }, [])
 
     const handleCourse = (course) => {
